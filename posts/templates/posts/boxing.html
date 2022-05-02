@@ -1,0 +1,39 @@
+{% extends 'posts/base.html'%}
+{% load posts_extras %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+        <div class="hero-text">
+            <div class="hero-content">
+                <h1>Бокс в Казахстане</h1>
+                <p>Более массовый вид спорта — это бокс.
+                    В этом олимпийском виде казахстанские спортсмены добились самых высочайших результатов.
+                    Традиционно сильна ещё с советских времен карагандинская школа мастеров кожаной перчатки.
+                    Имена нынешних чемпионов знают не только в Казахстане.
+                    Серик Жумангалиевич Сапиев — воспитанник абайской спортивной школы бокса (Карагандинская область).
+                    Наталья Рогозина, Геннадий Головкин, Василий Жиров.
+                    Это спортсмены-карагандинцы, прославившие независимый Казахстан на международной арене.
+                </p>
+                <ul>
+                    {% getboxing as posts %}
+                    {% for post in posts %}
+                    <li>
+                        <h2>{{ post.title }}</h2>
+                        {% autoescape off %}
+                        <p>{{ post.content|linebreaks|truncatewords:10}}</p>
+                        {% endautoescape %}
+                        <div class="clear"></div>
+                        <p class="link-read-post"><a href='boxing/{{ post.slug }}'>Читать больше>>></a></p>
+                        <a href="update_boxing/{{post.id}}" class="btn btn-outline-primary" id="{{post.id}}">Edit</a>
+                        <a href="delete_boxing/{{post.id}}" class="btn btn-outline-primary" id="{{post.id}}">Delete</a>
+                        <hr>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <a class="btn btn-outline-primary" href="{% url 'create_boxing' %}">Add sportsmen</a>
+            </div><!-- /.hero-text -->
+        </div><!-- /.hero-content -->
+{% endblock %}

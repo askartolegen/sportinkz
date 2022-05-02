@@ -1,0 +1,36 @@
+{% extends 'posts/base.html'%}
+{% load posts_extras %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+        <div class="hero-text">
+            <div class="hero-content">
+                <h1>Легкая атлетика в Казахстане</h1>
+                <p>
+                    Лёгкая атлетика в Казахстане не так популярна, как бокс или борьба,
+                    но представлена именами, известными не только в СНГ, но и во всём мире.
+                    Казахстанские легкоатлеты неоднократно завоёвывали медали чемпионатов мира и Олимпийских игр.
+                </p>
+                <ul>
+                    {% getathletics as posts %}
+                    {% for post in posts %}
+                    <li>
+                        <h2>{{ post.title }}</h2>
+                        {% autoescape off %}
+                        <p>{{ post.content|linebreaks|truncatewords:10}}</p>
+                        {% endautoescape %}
+                        <div class="clear"></div>
+                        <p class="link-read-post"><a href='athletics/{{ post.slug }}'>Читать больше>>></a></p>
+                        <a href="update_athletics/{{post.id}}" class="btn btn-outline-primary" id="{{post.id}}">Edit</a>
+                        <a href="delete_athletics/{{post.id}}" class="btn btn-outline-primary" id="{{post.id}}">Delete</a>
+                        <hr>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <a class="btn btn-outline-primary" href="{% url 'create_athletics' %}">Add sportsmen</a>
+            </div><!-- /.hero-text -->
+        </div><!-- /.hero-content -->
+{% endblock %}

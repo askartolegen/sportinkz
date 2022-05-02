@@ -1,0 +1,40 @@
+{% extends 'posts/base.html'%}
+{% load posts_extras %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+        <div class="hero-text">
+            <div class="hero-content">
+                <h1>Командные виды спорта</h1>
+                <p>
+                    Состояние спортивной базы, недостаточно развитая сеть детско-юношеских спортивных школ, которая обеспечивает возможность организации занятий в них только для 7 процентов детей школьного возраста республики,
+                    дефицит высококвалифицированных тренеров-преподавателей не позволяют удовлетворить широкие потребности населения, особенно детей и подростков, в занятиях физическими упражнениями.
+                    Отсутствие современных спортивных объектов, оснащенных качественным инвентарем и оборудованием, центров подготовки спортивного резерва и центров олимпийской подготовки сдерживает рост спортивного мастерства и
+                    подготовку спортивного резерва в стране.
+
+                    Отставание от международных стандартов обусловлено прежде всего отсутствием современной спортивной базы,
+                    отвечающей предъявляемым на сегодняшний день высочайшим мировым требованиям.
+                </p>
+                <ul>
+                    {% getteam_sports as posts %}
+                    {% for post in posts %}
+                    <li>
+                        <h2>{{ post.title }}</h2>
+                        {% autoescape off %}
+                        <p>{{ post.content|linebreaks|truncatewords:10}}</p>
+                        {% endautoescape %}
+                        <div class="clear"></div>
+                        <p class="link-read-post"><a href="team_sports/{{ post.slug }}">Читать больше>>></a></p>
+                        <a href="update_team_sports/{{post.id}}" class="btn btn-outline-primary" id="{{post.id}}">Edit</a>
+                        <a href="delete_team_sports/{{post.id}}" class="btn btn-outline-primary" id="{{post.id}}">Delete</a>
+                        <hr>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <a class="btn btn-outline-primary" href="{% url 'create_team_sports' %}">Add sportsmen</a>
+            </div><!-- /.hero-text -->
+        </div><!-- /.hero-content -->
+{% endblock %}

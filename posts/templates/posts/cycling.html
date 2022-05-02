@@ -1,0 +1,36 @@
+{% extends 'posts/base.html'%}
+{% load posts_extras %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+        <div class="hero-text">
+            <div class="hero-content">
+                <h1>Велоспорт</h1>
+                <p>
+                    Казахстанская Федерация Велоспорта, или KCF, является национальным руководящим органом велогонок в Казахстане.
+                    KCF твердо поддерживает Астану Pro Team в рамках своей глобальной стратегии по продвижению велоспорта в Казахстане.
+                    Он является членом UCI и Азиатской Конфедерации Велоспорта.
+                </p>
+                <ul>
+                    {% getcycling as posts %}
+                    {% for post in posts %}
+                    <li>
+                        <h2>{{ post.title }}</h2>
+                        {% autoescape off %}
+                        <p>{{ post.content|linebreaks|truncatewords:10}}</p>
+                        {% endautoescape %}
+                        <div class="clear"></div>
+                        <p class="link-read-post"><a href="cycling/{{ post.slug }}">Читать больше>>></a></p>
+                        <a href="update_cycling/{{post.id}}" class="btn btn-outline-primary" id="{{post.id}}">Edit</a>
+                        <a href="delete_cycling/{{post.id}}" class="btn btn-outline-primary" id="{{post.id}}">Delete</a>
+                        <hr>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <a class="btn btn-outline-primary" href="{% url 'create_cycling' %}">Add sportsmen</a>
+            </div><!-- /.hero-text -->
+        </div><!-- /.hero-content -->
+{% endblock %}

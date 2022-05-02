@@ -1,0 +1,37 @@
+{% extends 'posts/base.html'%}
+{% load posts_extras %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+        <div class="hero-text">
+            <div class="hero-content">
+                <h1>Тяжелая атлетика в Казахстане</h1>
+                <p>
+                    Одним из популярных видов спорта в Казахстане является тяжёлая атлетика.
+                    Во времена СССР мировое признание заслужил Анатолий Храпатый.
+                    В независимом Казахстане тяжёлая атлетика приобрела особую популярность после победы на Олимпиаде-2008 кызылординца Ильи Ильина.
+                    Сборная страны показывает выдающиеся результаты на Чемпионатах мира и Олимпийских играх.
+                </p>
+                <ul>
+                    {% getweightlifting as posts %}
+                    {% for post in posts %}
+                    <li>
+                        <h2>{{ post.title }}</h2>
+                        {% autoescape off %}
+                        <p>{{ post.content|linebreaks|truncatewords:10}}</p>
+                        {% endautoescape %}
+                        <div class="clear"></div>
+                        <p class="link-read-post"><a href="weightlifting/{{ post.slug }}">Читать больше>>></a></p>
+                        <a href="update_weightlifting/{{post.id}}" class="btn btn-outline-primary" id="{{post.id}}">Edit</a>
+                        <a href="delete_weightlifting/{{post.id}}" class="btn btn-outline-primary" id="{{post.id}}">Delete</a>
+                        <hr>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <a class="btn btn-outline-primary" href="{% url 'create_weightlifting' %}">Add sportsmen</a>
+            </div><!-- /.hero-text -->
+        </div><!-- /.hero-content -->
+{% endblock %}
