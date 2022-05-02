@@ -7,7 +7,7 @@ urlpatterns = [
 
     path('users_info', views.users_info, name='users_info'),
     path('send_message/<int:post_id>', views.send_message),
-    path('list', views.list, name='list'),
+    # path('list', views.list, name='list'),
 
     path('boxing', views.boxing, name='boxing'),
     path('create_boxing', views.create_boxing, name='create_boxing'),
