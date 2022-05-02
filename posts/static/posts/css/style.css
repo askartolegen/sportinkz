@@ -947,7 +947,6 @@ html, body {
 /* Section: Map Feature */
 .section-map-feature {
     padding-top: 250px;
-    background: #071021 url(../img/map.png) no-repeat top center / cover;
 }
 
 .section-map-feature h2 {
