@@ -51,11 +51,12 @@ def signup(request):
             return redirect('users_info')
         else:
             form.add_error('None', 'Error while add information')
+
     else:
         form = SignUp()
     context = {
         'title': 'Registration',
-        'form': form,
+        'form': form
     }
     return render(request, 'posts/signup.html', context)
 
