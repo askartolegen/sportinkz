@@ -16,20 +16,7 @@
                     Сборная страны показывает выдающиеся результаты на Чемпионатах мира и Олимпийских играх.
                 </p>
                 <ul>
-                    {% getwrestling as posts %}
-                    {% for post in posts %}
-                    <li>
-                        <h2>{{ post.title }}</h2>
-                        {% autoescape off %}
-                        <p>{{ post.content|linebreaks|truncatewords:10}}</p>
-                        {% endautoescape %}
-                        <div class="clear"></div>
-                        <p class="link-read-post"><a href="wrestling/{{ post.slug }}">Читать больше>>></a></p>
-                        <a href="update_wrestling/{{post.id}}" class="btn btn-outline-primary" id="{{post.id}}">Edit</a>
-                        <a href="delete_wrestling/{{post.id}}" class="btn btn-outline-primary" id="{{post.id}}">Delete</a>
-                        <hr>
-                    </li>
-                    {% endfor %}
+                    {% show_wrestling %}
                 </ul>
                 <a class="btn btn-outline-primary" href="{% url 'create_wrestling' %}">Add sportsmen</a>
             </div><!-- /.hero-text -->

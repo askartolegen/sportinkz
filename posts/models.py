@@ -12,18 +12,10 @@ class User_people(models.Model):
     pass2 = models.CharField(max_length=255, verbose_name='Confirm Your Password')
     country = models.CharField(max_length=255, verbose_name='Country')
     city = models.CharField(max_length=255, verbose_name='City')
+    document = models.FileField(upload_to='user_peoples/documents/')
 
-
-    # def get_absolute_url(self):
-    #     return reverse('user-detail', args=[str(self.id)])
-
-    # def get_absolute_url(self):
-    #     return reverse('post', kwargs={'post_id': self.username})
-
-
-class Document(models.Model):
-    docfile = models.FileField(upload_to='documents/%Y/%m/%d')
-
+    def get_absolute_url(self):
+        return reverse('user_info', kwargs={'pk' : self.pk})
 
 class Boxing(models.Model):
     title = models.CharField(max_length=255)
@@ -45,7 +37,6 @@ class Wrestling(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
-    docfile = models.FileField(upload_to='documents/%Y/%m/%d')
 
     def __str__(self):
         return self.title
@@ -62,7 +53,6 @@ class Athletics(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
-    docfile = models.FileField(upload_to='documents/%Y/%m/%d')
 
     def __str__(self):
         return self.title
@@ -78,7 +68,6 @@ class Weightlifting(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
-    docfile = models.FileField(upload_to='documents/%Y/%m/%d')
 
     def __str__(self):
         return self.title
@@ -94,7 +83,6 @@ class Cycling(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
-    docfile = models.FileField(upload_to='documents/%Y/%m/%d')
 
     def __str__(self):
         return self.title
@@ -110,7 +98,6 @@ class Team_sports(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
-    docfile = models.FileField(upload_to='documents/%Y/%m/%d')
 
     def __str__(self):
         return self.title

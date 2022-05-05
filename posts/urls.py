@@ -1,4 +1,7 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+
 from . import views
 
 urlpatterns = [
@@ -45,3 +48,6 @@ urlpatterns = [
     path('delete_team_sports/<int:post_id>', views.delete_team_sports),
     path('team_sports/<slug:post_slug>', views.team_sports, name='team_sports_slug'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

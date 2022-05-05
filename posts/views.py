@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
-# from .models import User_people
-from .forms import *
 from django.shortcuts import get_object_or_404
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 # from django.contrib.auth.models import User
 # from django.contrib.auth import authenticate, login, logout
 from project import settings
+from django.core.files.storage import FileSystemStorage
 
+from .forms import *
+# from .models import User_people
 # Create your views here.
 def index(request):
     return render(request, 'posts/index.html', {'title': 'Main Page'})
@@ -14,16 +15,21 @@ def index(request):
 # def send_message(request, post_id):
 def send_message(request, post_id):
     if request.method == 'POST':
+        form = Sendmessage(request.POST, request.FILES)
         subject = request.POST.get('subject')
         message = request.POST.get('text')
-        from_email = settings.EMAIL_HOST_USER
 
+        from_email = settings.EMAIL_HOST_USER
         users = User_people.objects.get(id=int(post_id))
         to_list = [users.email]
-        send_mail(subject, message,
+        email = EmailMessage(subject, message,
                   from_email,
                   to_list,
-                  fail_silently=False)
+                  headers={'Reply-To': from_email})
+        if request.FILES:
+            uploaded_file = request.FILES['file']
+            email.attach(uploaded_file.name, uploaded_file.read(), uploaded_file.content_type)
+        email.send()
         return redirect('users_info')
     else:
         form = Sendmessage()
@@ -36,7 +42,7 @@ def send_message(request, post_id):
 
 def signup(request):
     if request.method == 'POST':
-        form = SignUp(request.POST)
+        form = SignUp(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             subject = "You are Welcome"
@@ -51,7 +57,7 @@ def signup(request):
             return redirect('users_info')
         else:
             form.add_error('None', 'Error while add information')
-
+            return 2
     else:
         form = SignUp()
     context = {
@@ -60,51 +66,14 @@ def signup(request):
     }
     return render(request, 'posts/signup.html', context)
 
-# def signin(request):
-#     if request.method == 'POST':
-#         username = User_people.get_username
-#         pass1 = User_people.get_pass1
-#
-#         user = authenticate(username=username, password=pass1)
-#         if user is not None:
-#             login(request, user)
-#             return render(request, 'posts/index.html', {'title': 'Main Page'})
-#         else:
-#             return redirect('index')
-#     form = SignIn()
-#     context = {
-#         'title': 'Login',
-#         'form': form,
-#     }
-#     return render(request, 'posts/signin.html', context)
-#
-# def signout(request):
-#     logout(request)
-#     return redirect('index')
+def just_test():
+    return False
 
 def users_info(request):
     return render(request, 'posts/users_info.html', {'title': 'Users Information'})
 
-# def list(request):
-#     # Handle file upload
-#     if request.method == 'POST':
-#         form = DocumentForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             newdoc = Document(docfile=request.FILES['docfile'])
-#             newdoc.save()
-#             # Redirect to the document list after POST
-#             return redirect('myapp.views.list'))
-#     else:
-#         form = DocumentForm()  # A empty, unbound form
-#     # Load documents for the list page
-#     documents = Document.objects.all()
-#
-#     # Render list page with the documents and the form
-#     return render_to_response(
-#         'myapp/list.html',
-#         {'documents': documents, 'form': form},
-#         context_instance=RequestContext(request)
-#     )
+def test_my_function():
+    return 2
 
 #Boxing
 def boxing(request):

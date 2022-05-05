@@ -8,7 +8,7 @@
 <div class="hero-text" >
     <div class="hero-content" action="">
         <h2>New Message</h2>
-        <form method="post">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}<br>
             <button type="submit" class="btn btn-success">Send</button>

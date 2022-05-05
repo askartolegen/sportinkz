@@ -40,36 +40,17 @@ class SignUp(ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Enter your City',
             })
+
         }
-# class SignIn(ModelForm):
-#     class Meta:
-#         model = User_people
-#         fields = ('username', 'pass1',)
-#         widgets = {
-#             "username": TextInput(attrs={
-#                 'label': 'Your Name',
-#                 'class': 'form-control',
-#                 'placeholder': 'Enter a username',
-#                 'id': 'username'
-#             }),
-#             "pass1": PasswordInput(attrs={
-#                 'class': 'form-control',
-#                 'placeholder': 'Enter a Password',
-#             }),
-#         }
+
 
 class Sendmessage(Form):
     subject = CharField(label="Subject", max_length=255,
                         widget=TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter a subject of message'}))
     text = CharField(label="Text", max_length=255,
                      widget=Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter a text of message'}))
+    file = forms.FileField(label="Attach a File")
 
-
-class DocumentForm(forms.Form):
-    docfile = FileField(
-        label='Select a file',
-        help_text='max. 42 megabytes'
-    )
 
 short_widgets = {
             "title": TextInput(attrs={
