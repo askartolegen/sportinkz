@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0lmax-(2jb8)vbtcz5kc_5y#@iklo+uu3f#k_%+3aqgy&jq5wt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['project1234live-cli.herokuapp.com', '127.0.0.1']
 
@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['project1234live-cli.herokuapp.com', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'posts',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -85,6 +86,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
